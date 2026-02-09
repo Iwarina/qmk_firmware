@@ -5,7 +5,8 @@
     "build": {
         "lto": true
     },
-    "development_board": "caterina",
+    "development_board": "promicro",
+    "bootloader": "caterina",
     "diode_direction": "COL2ROW",
     "features": {
         "bootmagic": true,
