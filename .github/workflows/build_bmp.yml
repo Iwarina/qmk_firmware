@@ -5,7 +5,6 @@ on: [workflow_dispatch]
 jobs:
   build:
     runs-on: ubuntu-latest
-    # 前回の修正（ghcr.io）はそのまま維持してください
     container: ghcr.io/qmk/qmk_cli:latest
 
     steps:
@@ -15,8 +14,7 @@ jobs:
         submodules: recursive
 
     - name: Build Firmware
-      # -e オプションを削除しました（rules.mkに書いたため）
-      run: qmk compile -kb takashicompany/palmslave -km my_combo
+      run: qmk compile -kb takashicompany/palmslave -km my_combo -e CONVERT_TO=promicro_nrf52 -e BOOTLOADER=caterina
 
     - name: Archive artifacts
       uses: actions/upload-artifact@v4
