@@ -1,0 +1,29 @@
+name: Build Palmslave BMP
+
+on: [workflow_dispatch] # 手動でボタンを押して実行する設定
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container: qmkfm/qmk_build:latest
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v3
+      with:
+        submodules: recursive
+
+    - name: Build Firmware
+      # ここが魔法のコマンドです。
+      # -kb (キーボード名)
+      # -km (さっき作ったフォルダ名)
+      # CONVERT_TO=promicro_nrf52 (BMP用に変換せよという命令)
+      run: qmk compile -kb takashicompany/palmslave -km my_combo -e CONVERT_TO=promicro_nrf52
+
+    - name: Archive artifacts
+      uses: actions/upload-artifact@v4
+      with:
+        name: palmslave_bmp_firmware
+        path: |
+          *.hex
+          *.uf2
